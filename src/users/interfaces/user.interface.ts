@@ -1,11 +1,10 @@
-import { Roles } from '../enums/roles.enum';
+import { Roles } from '../../shared/enums/roles.enum';
 
 export interface UserAddress {
   country: string;
   city: string;
-  streetName: string;
-  buildingNumber: number;
-  apartmentNumber?: number;
+  street: string;
+  number: number;
 }
 
 export interface User {
@@ -14,6 +13,6 @@ export interface User {
   lastName: string;
   email: string;
   birthday: Date;
-  address?: UserAddress;
+  address?: Array<UserAddress>;
   role: Roles;
 }

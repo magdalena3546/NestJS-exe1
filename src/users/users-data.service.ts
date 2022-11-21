@@ -4,7 +4,6 @@ import { User } from './interfaces/user.interface';
 // eslint-disable-next-line prettier/prettier
 import { v4 as uuidv4 } from 'uuid';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { arrayToDate } from 'src/shared/helpers/date.helpers';
 
 @Injectable()
 export class UsersDataService {
@@ -14,7 +13,6 @@ export class UsersDataService {
     const user: User = {
       ...newUser,
       id: uuidv4(),
-      birthday: arrayToDate(newUser.birthday),
     };
     this.users.push(user);
     return user;
@@ -44,5 +42,9 @@ export class UsersDataService {
     });
 
     return this.getUserById(id);
+  }
+
+  getUserByEmail(email: string): User {
+    return this.users.find((i) => i.email === email);
   }
 }

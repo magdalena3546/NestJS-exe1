@@ -7,7 +7,10 @@ import {
   Delete,
   HttpCode,
   Put,
+  ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
+import { RoleGuard } from 'src/shared/guards/role.guard';
 import { dateToArray } from 'src/shared/helpers/date.helpers';
 import { CreateProductDTO } from './dto/create-product.dto';
 import { ExternalProductDto } from './dto/external-product.dto';
@@ -19,10 +22,10 @@ import { ProductsDataService } from './products-data.service';
 export class ProductsController {
   constructor(private productRepository: ProductsDataService) {}
   @Get(':id')
-  getProductById(@Param('id') _id_: string): ExternalProductDto {
-    return this.mapProductToExternal(
-      this.productRepository.getProductById(_id_),
-    );
+  getProductById(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ): ExternalProductDto {
+    return this.mapProductToExternal(this.productRepository.getProductById(id));
   }
 
   @Get()
@@ -33,6 +36,7 @@ export class ProductsController {
   }
 
   @Post()
+  @UseGuards(RoleGuard)
   addProduct(@Body() _item_: CreateProductDTO): ExternalProductDto {
     return this.mapProductToExternal(this.productRepository.addProduct(_item_));
   }
@@ -45,11 +49,11 @@ export class ProductsController {
 
   @Put(':id')
   updateProduct(
-    @Param('id') _id_: string,
-    @Body() _item_: UpdateProductDto,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+    @Body() product: UpdateProductDto,
   ): ExternalProductDto {
     return this.mapProductToExternal(
-      this.productRepository.updateProduct(_id_, _item_),
+      this.productRepository.updateProduct(id, product),
     );
   }
 
