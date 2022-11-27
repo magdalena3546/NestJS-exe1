@@ -19,6 +19,6 @@ export class CreateProductDTO {
   @Min(0)
   count: number;
   @IsArray()
-  @IsEnum({ each: true })
-  tags: Array<Tags>;
+  @IsEnum(Tags, { each: true })
+  tags: Tags[];
 }

@@ -10,5 +10,8 @@ export const dateToArray = (date: Date): Array<number> => {
 };
 
 export const arrayToDate = (array: any): Date => {
+  if (!Array.isArray(array)) {
+    return new Date();
+  }
   return new Date(array[0], array[1], array[2], array[3], array[4], array[5]);
 };
