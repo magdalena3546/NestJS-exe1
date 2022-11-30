@@ -10,14 +10,14 @@ import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import * as cors from 'cors';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSourceOptions } from 'typeorm';
 import config = require('./ormconfig');
+import { dataSourceOptions } from './ormconfig';
 
 @Module({
   imports: [
     ProductsModule,
     UsersModule,
-    TypeOrmModule.forRoot(config as unknown as DataSourceOptions),
+    TypeOrmModule.forRoot(dataSourceOptions),
   ],
   controllers: [AppController],
   providers: [AppService],

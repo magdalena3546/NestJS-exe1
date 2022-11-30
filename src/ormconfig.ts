@@ -1,15 +1,23 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
-export const typeOrmConfig: TypeOrmModuleOptions = {
+export const dataSourceOptions: DataSourceOptions = {
+  name: 'default',
   type: 'mysql',
   host: 'localhost',
   port: 3306,
   username: 'root',
   password: process.env.PASSWORD,
-  database: 'shop',
-  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  database: 'shop2',
   synchronize: true,
-  dropSchema: true,
+  dropSchema: false,
+  migrationsRun: true,
+  entities: ['dist/**/*.entity{.ts,.js}'],
+  migrations: ['dist/db/migrations/**/*{.ts,.js}'],
+  subscribers: [__dirname + '/db/subscribers/**/*{.ts,.js}'],
 };
-module.exports = typeOrmConfig;
+
+const dataSource = new DataSource(dataSourceOptions);
+dataSource.initialize();
+export default dataSource;
