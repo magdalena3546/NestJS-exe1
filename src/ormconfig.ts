@@ -8,7 +8,7 @@ export const dataSourceOptions: DataSourceOptions = {
   host: 'localhost',
   port: 3306,
   username: 'root',
-  password: process.env.PASSWORD,
+  password: 'Shuri3546#',
   database: 'shop2',
   synchronize: true,
   dropSchema: false,
